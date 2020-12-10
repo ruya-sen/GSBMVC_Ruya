@@ -52,17 +52,29 @@ class PdoGsb{
  * @param $mdp
  * @return l'id, le nom et le prénom sous la forme d'un tableau associatif 
 */
-	public function getInfosVisiteur($login, $mdp){
-		$mdp = hash("sha256" , $mdp);
-		$strReq = "select visiteur.id as id, visiteur.nom as nom, visiteur.prenom as prenom from visiteur 
-		where visiteur.login=:login and visiteur.mdp=:mdp";
-		$req = $this->monPdo->prepare($strReq);
-		$req->bindParam(':login', $login);
-		$req->bindParam(':mdp', $mdp);
-		$req->execute();
-		$ligne  = $req->fetch();
-		return $ligne;
-	}
+public function getInfosVisiteur($login, $mdp){
+	$mdp = hash("sha256" , $mdp);
+	$strReq = "select visiteur.id as id, visiteur.nom as nom, visiteur.prenom as prenom, travailler.tra_role as role from visiteur inner join
+	travailler on visiteur.id = travailler.idVisiteur
+	where visiteur.login=:login and visiteur.mdp=:mdp";
+	$req = $this->monPdo->prepare($strReq);
+	$req->bindParam(':login', $login);
+	$req->bindParam(':mdp', $mdp);
+	$req->execute();
+	$ligne  = $req->fetch();
+	return $ligne;
+	//01/12/2020 modif ronan
+}
+
+public function getInfoAffe(){
+	$strReq = "select aff_role, reg_nom, sec_nom from vaffectation";    
+	$req = $this->monPdo->prepare($strReq);
+	$req->execute();
+	$ligne  = $req->fetch();
+	
+	return $ligne;
+}
+//fonction ajoutée par Ronan le 08/12/2020
 
 /**
  * Retourne sous forme d'un tableau associatif toutes les lignes de frais hors forfait

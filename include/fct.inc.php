@@ -20,12 +20,16 @@ function estConnecte(){
  * @param $nom
  * @param $prenom
  */
-function connecter($id,$login,$nom,$prenom){
+function connecter($id,$nom,$prenom,$role,$region,$secteur){
 	$_SESSION['idVisiteur']= $id; 
-	$_SESSION['login']= $login; 
 	$_SESSION['nom']= $nom;
 	$_SESSION['prenom']= $prenom;
+	$_SESSION['role']= $role;
+	$_SESSION['reg']= $region;
+	$_SESSION['sec']= $secteur;
 }
+//ajout de variables session par Ronan le 08/12/2020
+
 /**
  * Détruit la session active
  */

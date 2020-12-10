@@ -4,7 +4,7 @@
     <nav class='col-md-2'>
         
         <h4>
-            <?php echo $_SESSION['prenom']."  ".$_SESSION['nom']  ?>
+        <?php echo $_SESSION['prenom']."  ".$_SESSION['nom']."<br>".$_SESSION['role']."<br>".$_SESSION['reg']."<br>".$_SESSION['sec']  ?>
         </h4>
            
         <ul class="list-unstyled">

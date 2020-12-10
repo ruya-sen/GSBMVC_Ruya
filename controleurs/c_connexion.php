@@ -17,12 +17,18 @@ switch($action){
 			include("vues/v_connexion.php");
 		}
 		else{
-			$id = $visiteur['id'];
-			$nom =  $visiteur['nom'];
-			$prenom = $visiteur['prenom'];
-			connecter($id,$login,$nom,$prenom);
-			include("vues/v_sommaire.php");
+			$vinfo = $pdo->getInfoAffe();
+            $id = $visiteur['id'];
+            $nom =  $visiteur['nom'];
+            $prenom = $visiteur['prenom'];
+            $role = $vinfo['aff_role'];
+            $region = $vinfo['reg_nom'];
+            $secteur = $vinfo['sec_nom'];
+            connecter($id,$nom,$prenom, $role, $region, $secteur);
+            include("vues/v_sommaire.php");
 		}
+		//remplacement de tout le else par Ronan le 08/12/2020
+		
 		break;
 	}
 	default :{
