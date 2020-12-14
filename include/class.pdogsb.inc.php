@@ -15,7 +15,7 @@
  */
 
 class PdoGsb{   		
-      	private $serveur='mysql:host=localhost';
+      	private $serveur='mysql:host=172.29.1.12';
       	private $bdd='dbname=gsb_frais';   		
       	private $user='userGsb' ;    		
       	private $mdp='secret' ;	
