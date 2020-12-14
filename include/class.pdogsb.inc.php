@@ -15,7 +15,7 @@
  */
 
 class PdoGsb{   		
-      	private $serveur='mysql:host=172.29.1.12';
+      	private $serveur='mysql:host=localhost';
       	private $bdd='dbname=gsb_frais';   		
       	private $user='userGsb' ;    		
       	private $mdp='secret' ;	
@@ -67,14 +67,15 @@ public function getInfosVisiteur($login, $mdp){
 }
 
 public function getInfoAffe(){
-	$strReq = "select aff_role, reg_nom, sec_nom from vaffectation";    
+	$idVisiteur = $_SESSION['idVisiteur'];
+	$strReq = "select idVisiteur, aff_role, reg_nom, sec_nom from vaffectation WHERE idVisiteur='$idVisiteur'";    
 	$req = $this->monPdo->prepare($strReq);
 	$req->execute();
 	$ligne  = $req->fetch();
 	
 	return $ligne;
 }
-//fonction ajoutée par Ronan le 08/12/2020
+//fonction ajoutée par Ronan le 08/12/2020 et modifiée par Ronan et Ruya le 14/12/2020
 
 /**
  * Retourne sous forme d'un tableau associatif toutes les lignes de frais hors forfait

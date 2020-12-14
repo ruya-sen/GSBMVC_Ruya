@@ -11,6 +11,7 @@ switch($action){
 	case 'valideConnexion':{
 		$login = $_REQUEST['login'];
 		$mdp = $_REQUEST['mdp'];
+		$idVisiteur = $_SESSION['idVisiteur'];
 		$visiteur = $pdo->getInfosVisiteur($login,$mdp);
 		if(!is_array( $visiteur)){
 			ajouterErreur("Login ou mot de passe incorrect","connexion");
@@ -27,7 +28,7 @@ switch($action){
             connecter($id,$nom,$prenom, $role, $region, $secteur);
             include("vues/v_sommaire.php");
 		}
-		//remplacement de tout le else par Ronan le 08/12/2020
+		//remplacement de tout le else par Ronan le 08/12/2020 et modifié par Ronan et Ruya le 14/12/2020
 		
 		break;
 	}
