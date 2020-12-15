@@ -16,10 +16,10 @@
               <a href="index.php?uc=etatFrais&action=selectionnerMois" title="Consultation de mes fiches de frais">Mes fiches de frais</a>
            </li>
            <li><?php
-    if($_SESSION['role'] == "Délégué"){
-        echo '<a href="index.php?uc=etatFrais&action=selectionnerMois" title="Liste des fiches de frais">Liste des fiches de frais</a>';
-    }
-    ?>
+                if(($_SESSION['role'] == "Délégué") || ($_SESSION['role'] == "Responsable")){
+                    echo '<a href="index.php?uc=listeFrais&action=listeDeFrais" title="Liste des fiches de frais">Liste des fiches de frais</a>';
+                }
+                ?>
            </li>
            <li>
                <a href="index.php?uc=modifierMdp&action=modifierMotDePasse">Modifier le mot de passe</a>
@@ -30,7 +30,7 @@
          </ul>
         
     </nav>
-    <div id="contenu" class="col-md-10">
+<div id="contenu" class="col-md-10">
    
         
     

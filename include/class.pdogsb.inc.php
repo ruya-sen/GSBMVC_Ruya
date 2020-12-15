@@ -100,6 +100,18 @@ public function getInfoAffe(){
 		}
 		return $lesLignes; 
 	}
+
+	public function getLesFraisHorsForfaitVisiteur($mois){
+	    $req = "select * from lignefraishorsforfait where lignefraishorsforfait.mois = '$mois' ";	
+		$res = $this->monPdo->query($req);
+		$lesLignes = $res->fetchAll();
+		$nbLignes = count($lesLignes);
+		for ($i=0; $i<$nbLignes; $i++){
+			$date = $lesLignes[$i]['date'];
+			$lesLignes[$i]['date'] =  dateAnglaisVersFrancais($date);
+		}
+		return $lesLignes; 
+	}
 /**
  * Retourne le nombre de justificatif d'un visiteur pour un mois donné
  
@@ -126,6 +138,17 @@ public function getInfoAffe(){
 		lignefraisforfait.quantite as quantite from lignefraisforfait inner join fraisforfait 
 		on fraisforfait.id = lignefraisforfait.idfraisforfait
 		where lignefraisforfait.idvisiteur ='$idVisiteur' and lignefraisforfait.mois='$mois' 
+		order by lignefraisforfait.idfraisforfait";	
+		$res = $this->monPdo->query($req);
+		$lesLignes = $res->fetchAll();
+		return $lesLignes; 
+	}
+
+	public function getLesFraisForfaitVisiteur($mois){
+		$req = "select fraisforfait.id as idfrais, fraisforfait.libelle as libelle, 
+		lignefraisforfait.quantite as quantite from lignefraisforfait inner join fraisforfait 
+		on fraisforfait.id = lignefraisforfait.idfraisforfait
+		where lignefraisforfait.mois='$mois' 
 		order by lignefraisforfait.idfraisforfait";	
 		$res = $this->monPdo->query($req);
 		$lesLignes = $res->fetchAll();
