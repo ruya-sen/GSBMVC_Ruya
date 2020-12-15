@@ -27,6 +27,12 @@ switch($uc){
 	case 'modifierMdp' :{
 		include("controleurs/c_modifierMdp.php");break;
 	}
+	case 'newUser' :{
+		include('controleurs/c_newUser.php');break;
+	}
+	case 'modifInfoPerso' :{
+		include('controleurs/c_modifInfoPerso.php');break;
+	}
 }
 include("vues/v_pied.php") ;
 ?>

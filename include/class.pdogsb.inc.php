@@ -402,5 +402,46 @@ public function getInfoAffe(){
 		}
 		//modif Ruya
 
-	}
-	?>
+//modif clemlebg------------------------------------------------------------------------------------------------------------------------
+	
+//nouvel utilisateur
+
+public function ajoutUtilisateur($idVisiteur, $nom, $prenom, $login, $adresse, $cp, $ville, $dateEmbauche){
+	$strReq = "INSERT INTO visiteur (id, nom, prenom, 
+	login, mdp, adresse, cp, ville, dateEmbauche) 
+	VALUES (':id', ':nom', ':prenom', ':mdp', ':login', ':adresse', ':cp', ':ville', ':dateEmbauche') = '$'";
+	$req = $this->monPdo->prepare($strReq);
+	$req->bindParam(':id', $idVisiteur);
+	$req->bindParam(':nom', $nom);
+	$req->bindParam(':prenom', $prenom);
+	$req->bindParam(':mdp', $mdp);
+	$req->bindParam(':login', $login);
+	$req->bindParam(':adresse', $adresse);
+	$req->bindParam(':cp', $cp);
+	$req->bindParam(':ville', $ville);
+	$req->bindParam(':dateEmbauche', $dateEmbauche);
+
+	$req->execute();
+}
+
+//modif informations personnelles 
+
+public function modifierInfoPerso($mofifInfoPerso){
+	$strReq = "UPDATE visiteur 
+	SET id = :id, nom = :nom, prenom = :prenom, login = :login, mdp = :mdp, adresse = :adresse, cp = :cp, ville = :ville, dateEmbauche = :dateEmbauche)
+	WHERE $mofifInfoPerso = true";
+	$req = $this->monPdo->prepare($strReq);
+	$req->bindParam(':id', $idVisiteur);
+	$req->bindParam(':nom', $nom);
+	$req->bindParam(':prenom', $prenom);
+	$req->bindParam(':mdp', $mdp);
+	$req->bindParam(':login', $login);
+	$req->bindParam(':adresse', $adresse);
+	$req->bindParam(':cp', $cp);
+	$req->bindParam(':ville', $ville);
+	$req->bindParam(':dateEmbauche', $dateEmbauche);
+
+	$req->execute();
+}
+}
+//fin des modifs de modif clemlebg------------------------------------------------------------------------------------------------------

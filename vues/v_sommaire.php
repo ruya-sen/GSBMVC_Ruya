@@ -24,6 +24,12 @@
            <li>
                <a href="index.php?uc=modifierMdp&action=modifierMotDePasse">Modifier le mot de passe</a>
            </li>
+           <li>
+              <a href="index.php?uc=newUser&action=creer" title="Créer un Utilisateur">Nouvel Utilisateur</a>
+           </li>
+           <li>
+              <a href="index.php?uc=modifInfoPerso&action=modifier" title="Modifier les informations personnelles">Informations personnelles</a>
+           </li>
  	   <li>
               <a href="index.php?uc=connexion&action=deconnexion" title="Se déconnecter">Déconnexion</a>
            </li>
