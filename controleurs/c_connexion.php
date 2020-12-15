@@ -32,6 +32,12 @@ switch($action){
 		
 		break;
 	}
+	case 'deconnexion':{
+		deconnecter();
+		include("vues/v_connexion.php");
+	}
+		break;
+		//ajout du cas deconnexion par Ronan le 15/12/2020
 	default :{
 		include("vues/v_connexion.php");
 		break;
