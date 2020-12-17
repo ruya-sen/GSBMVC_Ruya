@@ -18,15 +18,14 @@ switch($action){
 		$lesMois=$pdo->getLesMoisDisponibles($idVisiteur);
 		$moisASelectionner = $leMois;
 		include("vues/v_listeFrais.php");
-		$lesFraisHorsForfait = $pdo->getLesFraisHorsForfaitVisiteur($leMois);
-		$lesFraisForfait= $pdo->getLesFraisForfaitVisiteur($leMois);
+		$lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $leMois);
+		$lesFraisForfait= $pdo->getLesFraisForfait($idVisiteur, $leMois);
 		$lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idVisiteur,$leMois);
 		$numAnnee =substr( $leMois,0,4);
 		$numMois =substr( $leMois,4,2);
 		$dateModif =  $lesInfosFicheFrais['dateModif'];
 		$dateModif =  dateAnglaisVersFrancais($dateModif);
 		
-
 		include("vues/v_listeFraisSuite.php");
 	}
 }

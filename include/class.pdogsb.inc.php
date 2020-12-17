@@ -100,18 +100,6 @@ public function getInfoAffe(){
 		}
 		return $lesLignes; 
 	}
-
-	public function getLesFraisHorsForfaitVisiteur($mois){
-	    $req = "select * from lignefraishorsforfait where lignefraishorsforfait.mois = '$mois' ";	
-		$res = $this->monPdo->query($req);
-		$lesLignes = $res->fetchAll();
-		$nbLignes = count($lesLignes);
-		for ($i=0; $i<$nbLignes; $i++){
-			$date = $lesLignes[$i]['date'];
-			$lesLignes[$i]['date'] =  dateAnglaisVersFrancais($date);
-		}
-		return $lesLignes; 
-	}
 /**
  * Retourne le nombre de justificatif d'un visiteur pour un mois donné
  
@@ -138,17 +126,6 @@ public function getInfoAffe(){
 		lignefraisforfait.quantite as quantite from lignefraisforfait inner join fraisforfait 
 		on fraisforfait.id = lignefraisforfait.idfraisforfait
 		where lignefraisforfait.idvisiteur ='$idVisiteur' and lignefraisforfait.mois='$mois' 
-		order by lignefraisforfait.idfraisforfait";	
-		$res = $this->monPdo->query($req);
-		$lesLignes = $res->fetchAll();
-		return $lesLignes; 
-	}
-
-	public function getLesFraisForfaitVisiteur($mois){
-		$req = "select fraisforfait.id as idfrais, fraisforfait.libelle as libelle, 
-		lignefraisforfait.quantite as quantite from lignefraisforfait inner join fraisforfait 
-		on fraisforfait.id = lignefraisforfait.idfraisforfait
-		where lignefraisforfait.mois='$mois' 
 		order by lignefraisforfait.idfraisforfait";	
 		$res = $this->monPdo->query($req);
 		$lesLignes = $res->fetchAll();
@@ -406,42 +383,37 @@ public function getInfoAffe(){
 	
 //nouvel utilisateur
 
-public function ajoutUtilisateur($idVisiteur, $nom, $prenom, $login, $adresse, $cp, $ville, $dateEmbauche){
-	$strReq = "INSERT INTO visiteur (id, nom, prenom, 
-	login, mdp, adresse, cp, ville, dateEmbauche) 
-	VALUES (':id', ':nom', ':prenom', ':mdp', ':login', ':adresse', ':cp', ':ville', ':dateEmbauche') = '$'";
+public function ajoutUtilisateur($idVisiteur, $nom, $prenom, $adresse, $cp, $ville, $dateEmbauche){
+	$strReq = "INSERT INTO visiteur VALUES ('$idVisiteur', '$nom', '$prenom', '', '', '$adresse', '$cp', '$ville', '$dateEmbauche', '', '')";
 	$req = $this->monPdo->prepare($strReq);
-	$req->bindParam(':id', $idVisiteur);
-	$req->bindParam(':nom', $nom);
-	$req->bindParam(':prenom', $prenom);
-	$req->bindParam(':mdp', $mdp);
-	$req->bindParam(':login', $login);
-	$req->bindParam(':adresse', $adresse);
-	$req->bindParam(':cp', $cp);
-	$req->bindParam(':ville', $ville);
-	$req->bindParam(':dateEmbauche', $dateEmbauche);
 
 	$req->execute();
 }
 
 //modif informations personnelles 
 
-public function modifierInfoPerso($mofifInfoPerso){
+public function modifierInfoPerso($adresse, $cp, $ville, $tel, $mail){
 	$strReq = "UPDATE visiteur 
-	SET id = :id, nom = :nom, prenom = :prenom, login = :login, mdp = :mdp, adresse = :adresse, cp = :cp, ville = :ville, dateEmbauche = :dateEmbauche)
-	WHERE $mofifInfoPerso = true";
+	SET adresse = :adresse, cp = :cp, ville = :ville, telephone =:tel, mail =:mail)";
 	$req = $this->monPdo->prepare($strReq);
-	$req->bindParam(':id', $idVisiteur);
-	$req->bindParam(':nom', $nom);
-	$req->bindParam(':prenom', $prenom);
-	$req->bindParam(':mdp', $mdp);
-	$req->bindParam(':login', $login);
 	$req->bindParam(':adresse', $adresse);
 	$req->bindParam(':cp', $cp);
 	$req->bindParam(':ville', $ville);
-	$req->bindParam(':dateEmbauche', $dateEmbauche);
+	$req->bindParam(':tel', $tel);
+	$req->bindParam(':mail', $mail);
 
 	$req->execute();
 }
-}
+
 //fin des modifs de modif clemlebg------------------------------------------------------------------------------------------------------
+
+//modif Ruya
+public function listeVisiteurDelegue(){
+	$strReq = "SELECT idVisiteur, aff_role, aff_reg, nom, prenom FROM
+	vaffectation INNER JOIN visiteur ON idVisiteur = id
+	WHERE aff_role = 'Visiteur'";
+	$req = $this->monPdo->prepare($strReq);
+	$req->execute();
+
+}
+}

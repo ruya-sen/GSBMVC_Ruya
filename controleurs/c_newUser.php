@@ -5,7 +5,19 @@ if(!isset($_REQUEST['action'])){
 }
 $action = $_REQUEST['action'];
 switch($action){
-	case 'creer':{
+	case 'creerUtilisateur':{
+		include("vues/v_newUser.php");
+		break;
+	}
+	case 'valideUtilisateur':{
+		$idVisiteur = $_REQUEST['id'];
+		$nom = $_REQUEST['nom'];
+		$prenom = $_REQUEST['prenom'];
+		$adresse = $_REQUEST['adresse'];
+		$cp = $_REQUEST['cp'];
+		$ville = $_REQUEST['ville'];
+		$dateEmbauche = $_REQUEST['datemb'];
+		$ajoutUtilisateur = $pdo->ajoutUtilisateur($idVisiteur, $nom, $prenom, $adresse, $cp, $ville, $dateEmbauche);
 		include("vues/v_newUser.php");
 		break;
     }

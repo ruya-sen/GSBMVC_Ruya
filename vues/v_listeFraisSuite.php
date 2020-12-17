@@ -14,14 +14,6 @@ if (isset($_REQUEST['erreurs']))
     </h2>
     <form class="form-vertical" method="POST"  action="index.php?uc=listeFrais&action=voirEtatFrais">
       <div class="corpsForm">
-    <fieldset>
-            <legend>Eléments forfaitisés
-            </legend>
-            <?php
-            foreach($lesFraisForfait as $unFrais)
-            {
-                $idFrais = $unFrais['idfrais'];
-            }
-            ?>
-            <legend>Eléments hors forfaits
-            </legend>
+      <?php
+      echo $listeVisiteurDelegue = $pdo->listeVisiteurDelegue();
+      ?>
