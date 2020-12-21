@@ -1,10 +1,3 @@
-<?php
-include("vues/v_sommaire.php")
-?>
-
-<div class="row">           
-
-
 <?php 
 if (isset($_REQUEST['erreurs'])) 
     {    

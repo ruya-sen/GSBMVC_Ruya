@@ -86,6 +86,21 @@ if (isset($_REQUEST['erreurs']))
         </div>
         </div>
 
+        <div class="form-group"> 	
+         <label for="region">Région d'affectation</label>
+         <div class="row">
+         <div class="col-xs-12 col-sm-6 col-md-4">
+            <select class="form-control"  id="region" type="text" name="nom" placeholder="Région d'affectation" required>
+            <?php 
+            $region = $pdo->region();
+            echo $region['reg_nom'];
+            ?>
+            <br>
+            </select>
+         </div>
+            </div>
+         </div>
+
             <button type="submit" class="btn btn-primary">Créer</button>
              <button type="reset" class="btn btn-primary">Annuler</button>
         </fieldset>

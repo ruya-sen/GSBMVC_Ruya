@@ -1,4 +1,5 @@
 <?php
+include("vues/v_sommaire.php");
 if(!isset($_REQUEST['action'])){
 	$_REQUEST['action'] = 'modifierMotDePasse';
 }
@@ -33,6 +34,7 @@ switch($action){
 			}
 			else{
 				$changement = $pdo->changementMdp($nvmdp);
+				Echo '<p style=color:red;padding:10px;background-color:antiquewhite;>Changement réussi !</p>';
 				include("vues/v_formulaire.php");
 			}
 		break;

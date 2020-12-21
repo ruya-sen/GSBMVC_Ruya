@@ -8,7 +8,7 @@ if (isset($_REQUEST['erreurs']))
             }
      }
 ?>
-      <form class="form-vertical" method="post" action="index.php?uc=newUser&action=valideUtilisateur">
+      <form class="form-vertical" method="post" action="index.php?uc=modifInfoPerso&action=valideModif">
          <fieldset>
              <legend>Modifications:</legend>
         
@@ -25,7 +25,7 @@ if (isset($_REQUEST['erreurs']))
 	       <label for="cp">Code Postal</label>
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-4">
-                <input class="form-control" id="cp"  type="text"  name="cp" size="30" maxlength="45" placeholder="Code postal" pattern="[0-9]{5}" required>
+                <input class="form-control" id="cp"  type="number"  name="cp" size="30" maxlength="45" placeholder="Code postal" pattern="[0-9]{5}" required>
             </div>
         </div>
         </div>

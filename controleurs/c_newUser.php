@@ -18,6 +18,7 @@ switch($action){
 		$ville = $_REQUEST['ville'];
 		$dateEmbauche = $_REQUEST['datemb'];
 		$ajoutUtilisateur = $pdo->ajoutUtilisateur($idVisiteur, $nom, $prenom, $adresse, $cp, $ville, $dateEmbauche);
+		$ajoutUtilisateurTravailler = $pdo->ajoutUtilisateurTravailler($idVisiteur, $dateEmbauche, $tra_reg, $tra_role);
 		include("vues/v_newUser.php");
 		break;
     }

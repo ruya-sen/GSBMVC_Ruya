@@ -1,26 +1,22 @@
+<?php
+include("vues/v_sommaire.php")
+?>
 
-<h2>Fiche de frais du mois <?php echo $numMois."-".$numAnnee?> : 
-    </h2>
-    <form class="form-vertical" method="POST"  action="index.php?uc=listeFrais&action=voirEtatFrais">
-      <div class="corpsForm">
-      <?php
-      foreach ($listeVisiteurDelegue as $uneListe)
-      {
-          $idVisiteur = $uneListe['idVisiteur'];
-          $aff_role = $uneListe['aff_role'];
-          $aff_reg = $uneListe['aff_reg'];
-          $nom = $uneListe['nom'];
-          $prenom = $uneListe['prenom'];
+<div class="row">           
 
-          ?>
-          <p>
-          <label><?php echo $idVisiteur?> 
-          <?php echo $aff_reg?> 
-          <?php echo $aff_role?> 
-          <?php echo $nom?> 
-          <?php echo $prenom?>
-          </p>
-          <p>
+<?php 
+if (isset($_REQUEST['erreurs'])) 
+    {    
+        foreach($_REQUEST['erreurs'] as $erreur)
+            {
+             echo '<h3 class="text-danger">'.$erreur.'</h3>';
+            }
+     }
+    //modif Ruya
+?>
+
+<h2>Détails de  : </h2>
+<p>
         <strong>Etat : </strong>   
             <?php echo $libEtat?> depuis le <?php echo $dateModif?> <br> 
             <strong> Montant des frais :</strong> <span class="label label-info">  <?php echo $montantValide?> </span>            
@@ -55,8 +51,3 @@
 		</tr>
             </tbody>
     </table><br>
-      <?php
-      }
-      ?>
-
-

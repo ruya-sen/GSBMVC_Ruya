@@ -23,9 +23,14 @@ switch($action){
 		$lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idVisiteur,$leMois);
 		$numAnnee =substr( $leMois,0,4);
 		$numMois =substr( $leMois,4,2);
+		$listeVisiteurDelegueSuite = $pdo->listeVisiteurDelegueSuite($idVisiteur, $leMois);
+		$libEtat = $listeVisiteurDelegueSuite['libEtat'];
+		$montantValide = $listeVisiteurDelegueSuite['montantValide'];
 		$dateModif =  $lesInfosFicheFrais['dateModif'];
 		$dateModif =  dateAnglaisVersFrancais($dateModif);
+		$listeVisiteurDelegue = $pdo->listeVisiteurDelegue($idVisiteur, $leMois);
 		
 		include("vues/v_listeFraisSuite.php");
+		break;
 	}
 }

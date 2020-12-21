@@ -66,8 +66,7 @@ public function getInfosVisiteur($login, $mdp){
 	//01/12/2020 modif ronan
 }
 
-public function getInfoAffe(){
-	$idVisiteur = $_SESSION['idVisiteur'];
+public function getInfoAffe($idVisiteur){
 	$strReq = "select idVisiteur, aff_role, reg_nom, sec_nom from vaffectation WHERE idVisiteur='$idVisiteur'";    
 	$req = $this->monPdo->prepare($strReq);
 	$req->execute();
@@ -100,6 +99,7 @@ public function getInfoAffe(){
 		}
 		return $lesLignes; 
 	}
+	
 /**
  * Retourne le nombre de justificatif d'un visiteur pour un mois donné
  
@@ -384,7 +384,20 @@ public function getInfoAffe(){
 //nouvel utilisateur
 
 public function ajoutUtilisateur($idVisiteur, $nom, $prenom, $adresse, $cp, $ville, $dateEmbauche){
-	$strReq = "INSERT INTO visiteur VALUES ('$idVisiteur', '$nom', '$prenom', '', '', '$adresse', '$cp', '$ville', '$dateEmbauche', '', '')";
+	$strReq = "INSERT INTO visiteur VALUES ('$idVisiteur', '$nom', '$prenom', '$nom.$prenom', SUBSTRING(MD5(RAND()) FROM 1 FOR 8), '$adresse', '$cp', '$ville', '$dateEmbauche', '', '')";
+	$req = $this->monPdo->prepare($strReq);
+
+	$req->execute();
+}
+public function ajoutUtilisateurTravailler($idVisiteur, $tra_date, $tra_reg, $tra_role){
+	$strReq = "INSERT INTO visiteur VALUES ('$idVisiteur', '$tra_date', '$tra_reg', $tra_role'";
+	$req = $this->monPdo->prepare($strReq);
+
+	$req->execute();
+}
+public function region(){
+	$strReq = "SELECT reg_nom FROM region INNER JOIN 
+	travailler on tra_reg = id";
 	$req = $this->monPdo->prepare($strReq);
 
 	$req->execute();
@@ -392,15 +405,17 @@ public function ajoutUtilisateur($idVisiteur, $nom, $prenom, $adresse, $cp, $vil
 
 //modif informations personnelles 
 
-public function modifierInfoPerso($adresse, $cp, $ville, $tel, $mail){
+public function modifierInfoPerso($idVisiteur, $adresse, $cp, $ville, $tel, $mail){
 	$strReq = "UPDATE visiteur 
-	SET adresse = :adresse, cp = :cp, ville = :ville, telephone =:tel, mail =:mail)";
+	SET adresse = :adresse, cp = :cp, ville = :ville, telephone =:tel, mail =:mail
+	WHERE id =:idVisiteur";
 	$req = $this->monPdo->prepare($strReq);
 	$req->bindParam(':adresse', $adresse);
 	$req->bindParam(':cp', $cp);
 	$req->bindParam(':ville', $ville);
 	$req->bindParam(':tel', $tel);
 	$req->bindParam(':mail', $mail);
+	$req->bindParam(':idVisiteur', $idVisiteur);
 
 	$req->execute();
 }
@@ -409,11 +424,30 @@ public function modifierInfoPerso($adresse, $cp, $ville, $tel, $mail){
 
 //modif Ruya
 public function listeVisiteurDelegue(){
+	$idVisiteur = $_SESSION['idVisiteur'];
 	$strReq = "SELECT idVisiteur, aff_role, aff_reg, nom, prenom FROM
 	vaffectation INNER JOIN visiteur ON idVisiteur = id
-	WHERE aff_role = 'Visiteur'";
+	WHERE aff_role = 'Visiteur' AND aff_reg IN 
+	(select tra_reg from travailler WHERE idVisiteur = '$idVisiteur'AND (tra_role = 'Délégué'
+    OR tra_role = 'Responsable'))";
 	$req = $this->monPdo->prepare($strReq);
 	$req->execute();
+	$lesLignesVisiteur = $req->fetchAll();
+	return $lesLignesVisiteur;
+}
 
+public function listeVisiteurDelegueSuite($idVisiteur, $mois){
+	$idVisiteur = $_SESSION['idVisiteur'];
+	$stsReq = "select ficheFrais.idEtat as idEtat, ficheFrais.dateModif as dateModif, ficheFrais.nbJustificatifs as nbJustificatifs, 
+			ficheFrais.montantValide as montantValide, etat.libelle as libEtat from  fichefrais inner join Etat on ficheFrais.idEtat = Etat.id 
+			where fichefrais.idvisiteur = :idVisiteur and fichefrais.mois = :mois
+			and idEtat = 'RB'";
+		$res = $this->monPdo->prepare($stsReq);
+		$res->bindParam(':idVisiteur', $idVisiteur);
+		$res->bindParam(':mois', $mois);
+		$res->execute();
+
+		$laLigneVisiteur  = $res->fetch();
+		return $laLigneVisiteur;
 }
 }
